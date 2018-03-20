@@ -59,8 +59,9 @@ states.each do |state_ary|
   State.find_or_create_by(code: state_ary[0], name: state_ary[1])
 end
 
-repo = Git.open(Rails.root.join('congress-legislators'))
-repo.pull
+
+repo = Git.clone('git@github.com:unitedstates/congress-legislators.git', 'congress-legislators', path: Rails.root)
+# repo.pull
 
 legislators = YAML.load(File.open(Rails.root.join('congress-legislators', 'legislators-current.yaml')))
 legislators.each do |legislator|
